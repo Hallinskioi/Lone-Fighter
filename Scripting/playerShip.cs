@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class playerShip : MonoBehaviour
 {
+    //Movement
     public float movementSpeed;
     public float rotationSpeed;
+
+    //Shooting
+    public float roundsPerMinute;
+    private float fireDelay;
+
+    public Transform Cannon;
+    public GameObject Laser;
 
 
     // Start is called before the first frame update
@@ -41,5 +49,19 @@ public class playerShip : MonoBehaviour
         {
             transform.Rotate(Vector3.back * rotationSpeed * Time.deltaTime);
         }
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            if (Time.time > fireDelay)
+            {
+                Shoot();
+            }
+        }
+    }
+
+
+    void Shoot()
+    {
+        fireDelay = Time.time + roundsPerMinute;
+        Instantiate(Laser, Cannon.position, Cannon.rotation);
     }
 }
